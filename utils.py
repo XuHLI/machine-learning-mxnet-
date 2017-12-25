@@ -1,8 +1,7 @@
 from mxnet import gluon
 from mxnet import autograd
 from mxnet import nd
-from mxnet import image
-from mxnet.gluon import nn
+
 
 
 # Stochastic gradient decent: 
