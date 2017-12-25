@@ -53,15 +53,15 @@ def SGD(params, lr):
 		param[:] = param - lr*param.grad
 
 # train
-epochs = 10 # go through data 5 times
-learning_rate = .05
+epochs = 5 # go through data 5 times
+learning_rate = .05 
 for e in range(epochs):
 	total_loss = 0
 	for data, label in data_iter():
 		with autograd.record():
 			output = net(data)
-			loss = square_loss(output,label)
-		loss.backward() # add gradient to parameter: param.grad
+			loss = square_loss(output,label)  # in this case, the format is (wx+b-y)^2
+		loss.backward() # add gradient to parameter at data: param.grad    =  nd.sum(loss).backward()
 		SGD(params,learning_rate) # update the parameter
 
 		total_loss += nd.sum(loss).asscalar()
