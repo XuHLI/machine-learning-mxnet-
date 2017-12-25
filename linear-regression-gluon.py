@@ -1,6 +1,7 @@
 from mxnet import ndarray as nd 
 from mxnet import autograd
 from mxnet import gluon
+import random
 
 
 # generate data
@@ -15,23 +16,25 @@ X = nd.random_normal(shape=(num_examples,num_inputs))
 y = true_w[0]*X[:,0]+true_w[1]*X[:,1]+true_b
 y += .01*nd.random_normal(shape=y.shape)  # add noise
 
-# print(X[0:10],y[0:10])
-
-# read data
-# import random
-# batch_size = 10 # read number of data each time
-# def data_iter():
-# 	idx = list(range(num_examples)) # generate a random index
-# 	random.shuffle(idx) # a order
-# 	for i in range(0,num_examples,batch_size):
-# 		j = nd.array(idx[i:min(i+batch_size,num_examples)])
-# 		yield nd.take(X,j), nd.take(y,j)
-
 
 # gluon version
-batch_size = 10
-dataset = gluon.data.ArrayDataset(X,y)
-data_iter = gluon.data.DataLoader(dataset,batch_size,shuffle=True)
+batch_size = 11
+dataset = gluon.data.ArrayDataset(X,y)  # (X,y) = (data, label)
+data_iter = gluon.data.DataLoader(dataset,batch_size,shuffle=True) # format of data_iter: (data,label)
+
+# scratch version (in linear-regression.py)
+# The function of this part is the same as gluon.data.DataLoader(dataset,batch_size,shuffle=True)
+def data_iter_old():
+	idx = list(range(num_examples))
+	random.shuffle(idx)  # random order 
+	for i in range(0,num_examples,batch_size):
+		j = nd.array(idx[i:min(i+batch_size, num_examples)])
+
+		yield nd.take(X,j), nd.take(y,j)
+
+for data,label in data_iter_old():
+	print(data,label)
+	break
 
 for data, label in data_iter:
 	break
@@ -41,38 +44,15 @@ for data, label in data_iter:
 net = gluon.nn.Sequential() #  container: can add layers             
                             #  neuron network has layer
 
-net.add(gluon.nn.Dense(1)) # Dense: fully connected network: Wx+b
+net.add(gluon.nn.Dense(1)) # Dense: fully connected network: Wx+b,  1 output 
 
-net.initialize()
+net.initialize() # net initializing 
 
 square_loss = gluon.loss.L2Loss()
 
 trainer = gluon.Trainer(
 	net.collect_params(), 'sgd', {'learning_rate':0.1})
 
-
-
-
-# parameters: initialization
-# w = nd.random_normal(shape=(num_inputs,1))
-# b = nd.zeros((1,))
-# params = [w, b]
-
-# for param in params:
-# 	param.attach_grad()
-
-# # model
-# def net(X):
-# 	return nd.dot(X,w)+b
-
-# # loss function
-# def square_loss(yhat,y):
-# 	return (yhat-y.reshape(yhat.shape))**2
-
-# #  lr --- learning rate
-# def SGD(params, lr):
-# 	for param in params:
-# 		param[:] = param - lr*param.grad
 
 # train
 epochs = 5 # go through data 5 times
