@@ -132,6 +132,11 @@ def evaluate_accuracy(data_iterator,net):
 print(evaluate_accuracy(test_data,net))
 
 
+# print(params)
+# for param in params:
+# 	print(param.grad)
+# 	break
+
 
 import sys
 sys.path.append('..')
@@ -149,11 +154,14 @@ for epoch in range(4):
 			output = net(data)
 			loss  = cross_entropy(output,label)
 		loss.backward()
+		
 
 		SGD(params, learning_rate/batch_size)
 
 		train_loss += nd.mean(loss).asscalar()
 		train_acc += accuracy(output,label)
+
+	print(nd.max(output).asscalar())
 
 	test_acc = evaluate_accuracy(test_data,net)
 

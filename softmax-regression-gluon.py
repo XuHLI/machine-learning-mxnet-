@@ -44,7 +44,7 @@ for epoch in range(5):
 		train_loss += nd.mean(loss).asscalar()
 
 		train_acc += utils.accuracy(output,label)
-
+	print(nd.max(output).asscalar())
 	test_acc = utils.evaluate_accuracy(test_data,net)
 	print("Epoch %d. loss: %f  train_acc:%f  test_acc: %f" %(epoch, train_loss/len(train_data),
 		train_acc/len(train_data), test_acc.asscalar()))
