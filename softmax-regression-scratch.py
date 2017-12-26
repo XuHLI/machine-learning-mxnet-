@@ -138,10 +138,10 @@ sys.path.append('..')
 from utils import SGD
 from mxnet import autograd
 
-learning_rate = .05
+learning_rate = .3
 
 
-for epoch in range(1):
+for epoch in range(4):
 	train_loss = 0.
 	train_acc = 0. 
 	for data, label in train_data:
@@ -160,21 +160,21 @@ for epoch in range(1):
 	print("Epoch %d .Loss: %f, Train acc %f, Test acc %f" %(epoch, train_loss/len(train_data), train_acc/len(train_data), test_acc))
 
 # a new version using data_iter()
-for epoch in range(2):
-	train_loss = 0.
-	train_acc = 0.
-	n = 0
-	for data, label in data_iter():
-		with autograd.record():
-			output = net(data)
-			loss = cross_entropy(output,label)
-		loss.backward()
-		SGD(params,learning_rate/batch_size)
+# for epoch in range(2):
+# 	train_loss = 0.
+# 	train_acc = 0.
+# 	n = 0
+# 	for data, label in data_iter():
+# 		with autograd.record():
+# 			output = net(data)
+# 			loss = cross_entropy(output,label)
+# 		loss.backward()
+# 		SGD(params,learning_rate/batch_size)
 
-		train_loss += nd.mean(loss).asscalar()
-		train_acc += accuracy(output,label)
-		n += 1
+# 		train_loss += nd.mean(loss).asscalar()
+# 		train_acc += accuracy(output,label)
+# 		n += 1
 
-	test_acc = evaluate_accuracy(test_data,net)
+# 	test_acc = evaluate_accuracy(test_data,net)
 
-	print("Epoch %d train loss: %f train acc: %f, test acc: %f" %(epoch, train_loss/n,train_acc/n, test_acc))
+# 	print("Epoch %d train loss: %f train acc: %f, test acc: %f" %(epoch, train_loss/n,train_acc/n, test_acc))
