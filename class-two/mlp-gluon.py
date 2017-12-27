@@ -6,6 +6,7 @@ net = gluon.nn.Sequential()
 with net.name_scope():
 	net.add(gluon.nn.Flatten())
 	net.add(gluon.nn.Dense(256,activation='relu')) # hidden layer with 256 nodes
+	net.add(gluon.nn.Dense(128,activation='relu')) # can add more layers
 	net.add(gluon.nn.Dense(10))
 print(net)
 net.initialize()
