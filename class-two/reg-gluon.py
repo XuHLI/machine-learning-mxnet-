@@ -36,6 +36,11 @@ square_loss = gluon.loss.L2Loss()
 def test(net,X,y):
 	return square_loss(net(X),y).mean().asscalar()
 
+# weight_decay*learning_rate
+# how to update in trainer
+# It looks like w = w-lr*grad-weight_decay*lr*w  (0<weight_decay*lr<1)
+# under that condition that the penalty is lambda/2
+# In this case, one can verify that this is equivalent to add L2 norm of parameters
 def train(weight_decay):
 	learning_rate = .002
 	epochs = 10
@@ -71,7 +76,7 @@ def train(weight_decay):
 	print(net[0].weight.data())
 	return ('learned w[:10]:', net[0].weight.data()[:,:10], 'learned b:', net[0].bias.data())
 
-print(train(5))
+print(train(200))
 
 
 

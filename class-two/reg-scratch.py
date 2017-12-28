@@ -46,7 +46,8 @@ def get_params():
 	return (w, b)
 
 def net(X, lambd, w, b):
-	return nd.dot(X,w)+b+ lambd*((w**2).sum()+b**2)
+	# return nd.dot(X,w)+b+ lambd*((w**2).sum()+b**2)
+	return nd.dot(X,w)+b
 
 
 # loss function
@@ -74,7 +75,8 @@ def train(lambd):
 		for data, label in data_iter(num_train):
 			with autograd.record():
 				output = net(data,lambd,*params)
-				loss  = square_loss(output,label)
+				(w,b) = params
+				loss  = square_loss(output,label)+ lambd*((w**2).sum()+b**2)
 
 			loss.backward()
 			SGD(params,learning_rate)
@@ -87,6 +89,6 @@ def train(lambd):
 
 	return 'learned w[:10]:', params[0][:10], 'learned b:', params[1]
 
-print(train(2))
+print(train(400))
 
 
