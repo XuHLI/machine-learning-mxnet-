@@ -14,7 +14,7 @@ from mxnet import autograd
 num_inputs = 28*28
 num_outputs = 10
 
-num_hidden = 200
+num_hidden = 10
 weight_scale = .01
 
 # num_hidden_1 = 200
