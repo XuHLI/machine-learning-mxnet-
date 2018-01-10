@@ -3,8 +3,8 @@ import numpy as np
 
 import mxnet as mx
 
-train = pd.read_csv('Kaggle/data/train.csv')
-test = pd.read_csv('Kaggle/data/test.csv')
+train = pd.read_csv('../Kaggle/data/train.csv')
+test = pd.read_csv('../Kaggle/data/test.csv')
 
 all_X = pd.concat((train.loc[:,'MSSubClass':'SaleCondition'],
                    test.loc[:,'MSSubClass':'SaleCondition']))
@@ -179,8 +179,8 @@ def learn(epochs, verbose_epoch, X_train,y_train,test, learning_rate,weight_deca
 k = 5
 epochs = 80
 verbose_epoch = 10000
-learning_rate = .05
-weight_decay = 50
+learning_rate = 0.1
+weight_decay = 25
 
 train_loss, test_loss = k_fold_cross_valid(k,epochs,verbose_epoch,X_train,y_train, learning_rate,weight_decay)
 
