@@ -179,11 +179,11 @@ def learn(epochs, verbose_epoch, X_train,y_train,test, learning_rate,weight_deca
 k = 5
 epochs = 80
 verbose_epoch = 10000
-learning_rate = 0.1
-weight_decay = 25
+learning_rate = 0.06
+weight_decay = 90
 
 train_loss, test_loss = k_fold_cross_valid(k,epochs,verbose_epoch,X_train,y_train, learning_rate,weight_decay)
 
 print("%d-fold validation: Avg train loss: %f, Avg test loss: %f"%(k,train_loss, test_loss))
 
-# learn(epochs, verbose_epoch, X_train,y_train,test, learning_rate,weight_decay)
+learn(epochs, verbose_epoch, X_train,y_train,test, learning_rate,weight_decay)
