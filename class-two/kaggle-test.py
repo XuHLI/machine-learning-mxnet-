@@ -70,8 +70,8 @@ def get_rmse_log(net,X_train,y_train):
 def get_net():
     net = gluon.nn.Sequential()
     with net.name_scope():
-        net.add(gluon.nn.Dense(1200,activation='relu'))
-        net.add(gluon.nn.Dropout(.1))
+        net.add(gluon.nn.Dense(2048,activation='relu'))
+        net.add(gluon.nn.Dropout(.5))
         # net.add(gluon.nn.Dense(256,activation='relu'))
         net.add(gluon.nn.Dense(1))
     net.initialize(ctx=mx.gpu())
@@ -177,10 +177,10 @@ def learn(epochs, verbose_epoch, X_train,y_train,test, learning_rate,weight_deca
 
 # train process
 k = 5
-epochs = 80
+epochs = 100
 verbose_epoch = 10000
 learning_rate = 0.06
-weight_decay = 90
+weight_decay = 80
 
 train_loss, test_loss = k_fold_cross_valid(k,epochs,verbose_epoch,X_train,y_train, learning_rate,weight_decay)
 
