@@ -1,5 +1,6 @@
-import OpenSSL.SSL
+# import OpenSSL.SSL
 from mxnet.gluon import nn
+
 
 # alex net 
 
@@ -13,16 +14,16 @@ with net.name_scope():
 
 	# second phase
 	net.add(nn.Conv2D(
-		channels=256, kernel_size=5, strides=2, activation='relu'))
+		channels=256, kernel_size=5, padding=2, activation='relu'))
 	net.add(nn.MaxPool2D(pool_size=3, strides=2))
 
 	# third phase
 	net.add(nn.Conv2D(
-		channels=384, kernel_size=3, strides=1, activation='relu'))
+		channels=384, kernel_size=3, padding=1, activation='relu'))
 	net.add(nn.Conv2D(
-		channels=384, kernel_size=3, strides=1, activation='relu'))
+		channels=384, kernel_size=3, padding=1, activation='relu'))
 	net.add(nn.Conv2D(
-		channels=256, kernel_size=3, strides=1, activation='relu'))
+		channels=256, kernel_size=3, padding=1, activation='relu'))
 	net.add(nn.MaxPool2D(pool_size=3, strides=2))
 
 
@@ -66,7 +67,7 @@ trainer = gluon.Trainer(
 	net.collect_params(), 'sgd',{'learning_rate':0.01})
 
 
-for epoch in range(1):
+for epoch in range(3):
 	train_loss = 0.
 	train_acc = 0.
 	for data, label in train_data:
@@ -81,7 +82,7 @@ for epoch in range(1):
 		train_loss +=nd.mean(loss).asscalar()
 		train_acc += utils.accuracy(output,label)
 
-	test_acc = utils.evaluate_accuracy(net,test_data,ctx)
+	test_acc = utils.evaluate_accuracy(test_data,net,ctx)
 	print("Epoch %d. train loss: %f, train acc: %f, test acc: %f"%(epoch,train_loss/len(train_data), train_acc/len(train_data),test_acc))
 
 
