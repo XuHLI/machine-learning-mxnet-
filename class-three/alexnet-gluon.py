@@ -2,7 +2,7 @@
 from mxnet.gluon import nn
 
 
-# alex net 
+# alex net
 
 net = nn.Sequential()
 
@@ -45,7 +45,7 @@ import sys
 sys.path.append('..')
 
 import utils
-from mxnet import image 
+from mxnet import image
 
 def transform(data,label):
 	# 28 x 28 -> 224 x 224
@@ -56,6 +56,7 @@ batch_size = 64
 resize = 224
 train_data, test_data = utils.load_data_fashion_mnist(batch_size,resize)
 
+
 # train
 from mxnet import gluon, autograd, nd, init
 ctx = utils.try_gpu()
@@ -64,10 +65,10 @@ net.initialize(ctx=ctx, init=init.Xavier())
 softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()
 
 trainer = gluon.Trainer(
-	net.collect_params(), 'sgd',{'learning_rate':0.01})
+	net.collect_params(), 'sgd',{'learning_rate': 0.01})
 
 
-for epoch in range(3):
+for epoch in range(1):
 	train_loss = 0.
 	train_acc = 0.
 	for data, label in train_data:
